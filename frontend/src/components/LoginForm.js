@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../actions';
 import './LoginForm.scss';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: '',
+      user_name: '',
       password: ''
     }
+    this.onSubmit = this.onSubmit.bind(this);
   }
+
+  onSubmit(e) {
+    const { user_name, password } = this.state;
+    e.preventDefault();
+    this.props.login(user_name, password);
+  }
+
+
   render() {
     return (
       <div className="LoginForm">
-        <form>
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <input
               type="text"
               id="login-form-login"
               className="form-control"
               placeholder="Login"
-              value={this.state.login}
-              onChange={event => this.setState({ login: event.target.value })}
+              value={this.state.user_name}
+              onChange={event => this.setState({ user_name: event.target.value })}
             />
           </div>
           <div className="form-group">
@@ -45,4 +56,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default connect(null, { login })(LoginForm);
