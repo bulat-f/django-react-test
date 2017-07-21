@@ -4,7 +4,7 @@ const defaultState = {
   user: {
     first_name: '',
     last_name: ''
-  }
+  },
   jwt: null
 }
 
