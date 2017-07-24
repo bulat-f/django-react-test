@@ -1,10 +1,22 @@
 import fetch from 'isomorphic-fetch';
+import Cookies from 'universal-cookie';
 
 class Auth {
-  static login(user_name, password) {
-    const path = '/';
+  static login(username, password) {
+    const cookies = new Cookies();
+    const csrftoken = cookies.get('csrftoken');
+
+    const path = '/api/v1/auth';
     const options = {
-      method: 'GET',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: {
+        username,
+        password
+      }
     };
 
     return fetch(this.url(path), options);

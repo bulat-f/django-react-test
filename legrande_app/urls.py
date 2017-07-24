@@ -17,8 +17,6 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
 
-from rest_framework_jwt.views import obtain_jwt_token
-
 from . import views
 
 urlpatterns = [
