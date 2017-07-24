@@ -1,1 +1,3 @@
 mysqlclient
+djangorestframework
+djangorestframework-jwt
