@@ -1,26 +1,8 @@
-import fetch from 'isomorphic-fetch';
-import Cookies from 'universal-cookie';
+import ApiV1 from './ApiV1';
 
-class Auth {
+class Auth extends ApiV1 {
   static login(username, password) {
-    const cookies = new Cookies();
-    const csrftoken = cookies.get('csrftoken');
-
-    const path = '/api/v1/auth/';
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      },
-      body: JSON.stringify({ username, password })
-    };
-
-    return fetch(this.url(path), options);
-  }
-
-  static url(path) {
-    return `http://localhost:8000${path}`
+    return super.request('auth', { username, password });
   }
 }
 

@@ -5,18 +5,29 @@ const defaultState = {
     first_name: '',
     last_name: ''
   },
-  jwt: null
+  isAuthenticated: !!localStorage.getItem('jwt')
 }
 
 const account = (state = defaultState, action) => {
   switch (action.type) {
-    case types.REQUEST_LOGIN:
+    case types.LOGIN_REQUEST:
       return defaultState;
-    case types.SUCCESS_LOGIN:
-      const { user, jwt } = action;
+    case types.LOGIN_SUCCESS:
+      const { user } = action;
       return {
         user,
-        jwt
+        isAuthenticated: true
+      }
+
+    case types.LOGIN_FAILURE:
+      return {
+        user: null,
+        isAuthenticated: false
+      }
+    case types.LOGOUT:
+      return {
+        user: null,
+        isAuthenticated: false
       }
     default:
       return state;
