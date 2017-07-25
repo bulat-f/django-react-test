@@ -6,17 +6,14 @@ class Auth {
     const cookies = new Cookies();
     const csrftoken = cookies.get('csrftoken');
 
-    const path = '/api/v1/auth';
+    const path = '/api/v1/auth/';
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrftoken
       },
-      body: {
-        username,
-        password
-      }
+      body: JSON.stringify({ username, password })
     };
 
     return fetch(this.url(path), options);
