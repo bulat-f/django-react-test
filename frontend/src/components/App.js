@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.scss';
-import LoginForm from './LoginForm';
+import LoginPage from './login/LoginPage';
+import HomePage  from './home/HomePage';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <LoginForm />
-      </div>
+      <Router>
+        <div>
+          <Link to="/"> Home </Link>
+          <Link to="/login"> Login </Link>
+          <Route exact={true} path="/" component={HomePage} />
+          <Route path="/login" component={LoginPage} />
+        </div>
+      </Router>
     );
   }
 }
