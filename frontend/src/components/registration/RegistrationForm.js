@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { registration } from '../../actions';
+import FormErrors from '../shared/FormErrors';
+import InputWithValidation from '../shared/InputWithValidation';
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -21,52 +23,37 @@ class RegistrationForm extends Component {
   render() {
     return (
       <div className="form-box">
+        <FormErrors errors={this.props.errors && this.props.errors.non_field_errors} />
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Login"
-              value={this.state.username}
-              onChange={event => this.setState({ username: event.target.value })}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="First Name"
-              value={this.state.first_name}
-              onChange={event => this.setState({ first_name: event.target.value })}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Last Name"
-              value={this.state.last_name}
-              onChange={event => this.setState({ last_name: event.target.value })}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={event => this.setState({ password: event.target.value })}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password Confirmation"
-              value={this.state.password_confirmation}
-              onChange={event => this.setState({ password_confirmation: event.target.value })}
-            />
-          </div>
+          <InputWithValidation
+            placeholder="Login"
+            value={this.state.username}
+            onChange={event => this.setState({ username: event.target.value })}
+            errors={this.props.errors && this.props.errors.username}
+          />
+
+          <InputWithValidation
+            placeholder="First Name"
+            value={this.state.first_name}
+            onChange={event => this.setState({ first_name: event.target.value })}
+            errors={this.props.errors && this.props.errors.first_name}
+          />
+
+          <InputWithValidation
+            placeholder="Last Name"
+            value={this.state.last_name}
+            onChange={event => this.setState({ last_name: event.target.value })}
+            errors={this.props.errors && this.props.errors.last_name}
+          />
+
+          <InputWithValidation
+            type="password"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={event => this.setState({ password: event.target.value })}
+            errors={this.props.errors && this.props.errors.password}
+          />
+
           <button
             type="submit"
             className="btn btn-default"
@@ -79,4 +66,8 @@ class RegistrationForm extends Component {
   }
 }
 
-export default connect(null, { registration })(RegistrationForm);
+const mapStateToProps = (state) => ({
+  errors: state.account.errors
+})
+
+export default connect(mapStateToProps, { registration })(RegistrationForm);

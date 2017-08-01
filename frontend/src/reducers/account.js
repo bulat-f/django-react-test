@@ -5,40 +5,43 @@ const defaultState = {
     first_name: '',
     last_name: ''
   },
-  isAuthenticated: !!localStorage.getItem('jwt')
+  isAuthenticated: !!localStorage.getItem('jwt'),
+  errors: null
 }
 
 const account = (state = defaultState, action) => {
   switch (action.type) {
     case types.REGISTRATION_REQUEST:
+    case types.LOGIN_REQUEST:
       return defaultState;
 
     case types.REGISTRATION_FAILURE:
       return {
         user: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        errors: action.errors
       }
-
-    case types.LOGIN_REQUEST:
-      return defaultState;
-
+    
     case types.LOGIN_SUCCESS:
       const { user } = action;
       return {
         user,
-        isAuthenticated: true
+        isAuthenticated: true,
+        errors: null
       }
 
     case types.LOGIN_FAILURE:
       return {
         user: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        errors: action.errors
       }
 
     case types.LOGOUT:
       return {
         user: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        errors: null
       }
 
     default:

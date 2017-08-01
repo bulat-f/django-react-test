@@ -5,8 +5,9 @@ export const registrationRequest = () => ({
   type: types.REGISTRATION_REQUEST
 })
 
-export const registrationError = () => ({
-  type: types.REGISTRATION_FAILURE
+export const registrationError = (json) => ({
+  type: types.REGISTRATION_FAILURE,
+  errors: json
 })
 
 export const registration = (params) => {
@@ -16,7 +17,7 @@ export const registration = (params) => {
       .then(response => response.json())
       .then(json => {
         dispatch(
-          json.token ? loginSuccess(json) : registrationError()
+          json.token ? loginSuccess(json) : registrationError(json)
         )
       })
   }
@@ -34,8 +35,9 @@ export const loginSuccess = (json) => {
   }
 }
 
-export const loginError = () => ({
-  type: types.LOGIN_FAILURE
+export const loginError = (json) => ({
+  type: types.LOGIN_FAILURE,
+  errors: json
 })
 
 export const login = (username, password) => {
@@ -47,7 +49,7 @@ export const login = (username, password) => {
         if (json.token) {
           dispatch(loginSuccess(json));
         } else {
-          dispatch(loginError());
+          dispatch(loginError(json));
         }
       })
   }
