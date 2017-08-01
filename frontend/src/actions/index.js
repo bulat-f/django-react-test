@@ -18,14 +18,14 @@ export const login = (username, password) => {
   return (dispatch, getState) => {
     dispatch(loginRequest());
     return Auth.login(username, password)
-      .then(
-        response => response.json(),
-        error =>  loginError()
-      )
+      .then(response => response.json())
       .then(json => {
-        console.log(json);
-        localStorage.setItem('jwt', json.token);
-        dispatch(loginSuccess(json));
+        if (json.token) {
+          localStorage.setItem('jwt', json.token);
+          dispatch(loginSuccess(json));
+        } else {
+          dispatch(loginError());
+        }
       })
   }
 }
