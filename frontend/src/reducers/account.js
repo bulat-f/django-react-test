@@ -10,8 +10,18 @@ const defaultState = {
 
 const account = (state = defaultState, action) => {
   switch (action.type) {
+    case types.REGISTRATION_REQUEST:
+      return defaultState;
+
+    case types.REGISTRATION_FAILURE:
+      return {
+        user: null,
+        isAuthenticated: false
+      }
+
     case types.LOGIN_REQUEST:
       return defaultState;
+
     case types.LOGIN_SUCCESS:
       const { user } = action;
       return {
@@ -24,11 +34,13 @@ const account = (state = defaultState, action) => {
         user: null,
         isAuthenticated: false
       }
+
     case types.LOGOUT:
       return {
         user: null,
         isAuthenticated: false
       }
+
     default:
       return state;
   }

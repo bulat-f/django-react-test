@@ -22,7 +22,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div className="LoginForm">
+      <div className="form-box">
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <input
