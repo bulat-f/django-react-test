@@ -3,14 +3,25 @@ import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom
 import { connect } from 'react-redux';
 import './App.scss';
 import RegistrationPage from './registration/RegistrationPage';
-import LoginPage        from './login/LoginPage';
+import LoginPage        from './auth/LoginPage';
 import HomePage         from './home/HomePage';
+import DashboardPage    from './dashboard/DashboardPage';
 
 class App extends Component {
+  onlyForAuthenticated(PageComponent) {
+    return () => (
+      this.props.account.isAuthenticated ? (
+        <PageComponent />
+      ) : (
+        <Redirect to="/" />
+      )
+    )
+  }
+
   onlyForNotAuthenticated(PageComponent) {
     return () => (
       this.props.account.isAuthenticated ? (
-        <Redirect to="/" />
+        <Redirect to="/dashboard" />
       ) : (
         <PageComponent />
       )
@@ -24,7 +35,11 @@ class App extends Component {
           <Link to="/"> Home </Link>
           <Link to="/login"> Login </Link>
           <Link to="/registration"> Sign Up </Link>
-          <Route exact={true} path="/" component={HomePage} />
+          <Route
+            exact={true}
+            path="/"
+            render={this.onlyForNotAuthenticated(HomePage)}
+          />
           <Route
             path="/registration"
             render={this.onlyForNotAuthenticated(RegistrationPage)}
@@ -32,6 +47,10 @@ class App extends Component {
           <Route
             path="/login"
             render={this.onlyForNotAuthenticated(LoginPage)}
+          />
+          <Route
+            path="/dashboard"
+            render={this.onlyForAuthenticated(DashboardPage)}
           />
         </div>
       </Router>
