@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import './App.scss';
 import RegistrationPage from './registration/RegistrationPage';
 import LoginPage        from './auth/LoginPage';
-import HomePage         from './home/HomePage';
-import DashboardPage    from './dashboard/DashboardPage';
+import Home             from './home/Home';
+import SettingsPage     from './settings/SettingsPage';
+import Navbar           from './shared/Navbar';
 
 class App extends Component {
   onlyForAuthenticated(PageComponent) {
@@ -13,7 +14,7 @@ class App extends Component {
       this.props.account.isAuthenticated ? (
         <PageComponent />
       ) : (
-        <Redirect to="/" />
+        <Redirect to="/login" />
       )
     )
   }
@@ -21,7 +22,7 @@ class App extends Component {
   onlyForNotAuthenticated(PageComponent) {
     return () => (
       this.props.account.isAuthenticated ? (
-        <Redirect to="/dashboard" />
+        <Redirect to="/" />
       ) : (
         <PageComponent />
       )
@@ -29,26 +30,26 @@ class App extends Component {
   }
 
   render() {
+    const { account: { isAuthenticated, user } } = this.props;
     return (
       <Router>
         <div>
-          <Route
-            exact={true}
-            path="/"
-            render={this.onlyForNotAuthenticated(HomePage)}
-          />
-          <Route
-            path="/registration"
-            render={this.onlyForNotAuthenticated(RegistrationPage)}
-          />
-          <Route
-            path="/login"
-            render={this.onlyForNotAuthenticated(LoginPage)}
-          />
-          <Route
-            path="/dashboard"
-            render={this.onlyForAuthenticated(DashboardPage)}
-          />
+          <Navbar isAuthenticated={isAuthenticated} user={user} />
+          <div className="container-fluid">
+            <Route exact={true} path="/" component={Home} />
+            <Route
+              path="/registration"
+              render={this.onlyForNotAuthenticated(RegistrationPage)}
+            />
+            <Route
+              path="/login"
+              render={this.onlyForNotAuthenticated(LoginPage)}
+            />
+            <Route
+              path="/settings"
+              render={this.onlyForAuthenticated(SettingsPage)}
+            />
+          </div>
         </div>
       </Router>
     );
