@@ -147,3 +147,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ),
 }
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'legrande_app.utils.jwt_response_payload_handler',
+}

@@ -28,11 +28,11 @@ export const loginRequest = () => ({
 })
 
 export const loginSuccess = (json) => {
-  localStorage.setItem('jwt', json.token);
-  return {
-    type: types.LOGIN_SUCCESS,
-    token: json.token
-  }
+  const { token, username, first_name, last_name } = json;
+  const user = { username, first_name, last_name };
+  localStorage.setItem('jwt', token);
+  localStorage.setItem('current_user', JSON.stringify(user));
+  return Object.assign({ type: types.LOGIN_SUCCESS }, user);
 }
 
 export const loginError = (json) => ({
@@ -46,17 +46,14 @@ export const login = (username, password) => {
     return Auth.login(username, password)
       .then(response => response.json())
       .then(json => {
-        if (json.token) {
-          dispatch(loginSuccess(json));
-        } else {
-          dispatch(loginError(json));
-        }
+        dispatch(json.token ? loginSuccess(json) : loginError(json));
       })
   }
 }
 
 export const logout = () => {
   localStorage.removeItem('jwt');
+  localStorage.removeItem('current_user');
   return {
     type: types.LOGOUT
   }

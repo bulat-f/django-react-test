@@ -1,8 +1,6 @@
-import jwt
 from rest_framework import serializers
-from rest_framework_jwt.utils import jwt_payload_handler
+from rest_framework_jwt.settings import api_settings as jwt_api
 from django.contrib.auth.models import User
-from legrande_app.settings import SECRET_KEY
 
 class UserSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField()
@@ -10,6 +8,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password', 'token')
+        extra_kwargs = {
+            'password': { 'write_only': True }
+        }
 
     def create(self, validated_data):
         user = User(
@@ -22,6 +23,5 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def get_token(self, user):
-        payload = jwt_payload_handler(user)
-        token = jwt.encode(payload, SECRET_KEY)
-        return token.decode('unicode_escape')
+        payload = jwt_api.JWT_PAYLOAD_HANDLER(user)
+        return jwt_api.JWT_ENCODE_HANDLER(payload)
