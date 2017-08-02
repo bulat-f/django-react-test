@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { registration } from '../../actions';
 import FormErrors from '../shared/FormErrors';
 import InputWithValidation from '../shared/InputWithValidation';
@@ -60,6 +61,10 @@ class RegistrationForm extends Component {
           >
             Sign Up
           </button>
+          <span>Already have account?</span>
+          <Link to="/login" className="btn btn-inline">
+            Login
+          </Link>
         </form>
       </div>
     );

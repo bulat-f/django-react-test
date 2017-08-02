@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import HomeNavbar from './HomeNavbar';
 
 class HomePage extends Component {
   render() {
     return (
       <div>
-        <h1 className="page-heading"> Home Page </h1>
+        <HomeNavbar />
+        <div className="container-fluid">
+          <h1 className="text-center"> Home Page </h1>
+        </div>
       </div>
     );
   }

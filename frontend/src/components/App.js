@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.scss';
 import RegistrationPage from './registration/RegistrationPage';
@@ -32,9 +32,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Link to="/"> Home </Link>
-          <Link to="/login"> Login </Link>
-          <Link to="/registration"> Sign Up </Link>
           <Route
             exact={true}
             path="/"
