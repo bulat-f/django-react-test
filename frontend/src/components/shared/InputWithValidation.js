@@ -8,8 +8,8 @@ const InputWithValidation = (props) => {
       <input
         type={type || 'text'}
         className="form-control"
-        placeholder={placeholder}
-        value={value}
+        placeholder={placeholder || ''}
+        value={value || ''}
         onChange={event => onChange(event)}
       />
       {errors && errors.map((message, index) =>

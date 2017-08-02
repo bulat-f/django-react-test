@@ -4,9 +4,11 @@ import { logout } from '../../actions';
 
 class Logout extends Component {
   render() {
+    const { className } = this.props;
     return (
       <a
-        className="btn btn-danger"
+        href="#"
+        className={className}
         onClick={() => { this.props.logout() }}
       >
         Logout
